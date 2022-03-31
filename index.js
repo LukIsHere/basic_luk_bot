@@ -1,3 +1,4 @@
+var conf = require("../basic_luk_bot.json")
 const { Client, Intents, TextChannel, Permissions, Invite, User} = require('discord.js');
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -108,4 +109,4 @@ function admin(id){
 Array.prototype.sample = function(){
     return this[Math.floor(Math.random()*this.length)];
 }
-bot.login("OTUwODQ5NDE2MDExNjA4MTI0.Yie5hg.mrOPYSgo0iIiAFw5v9Jp7XhQAuY")
+bot.login(conf.dc)
