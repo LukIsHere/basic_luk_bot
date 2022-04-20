@@ -1,4 +1,6 @@
 var conf = require("../basic_luk_bot.json")
+var data = loaddata();
+var fs = require("fs")
 const { Client, Intents, TextChannel, Permissions, Invite, User} = require('discord.js');
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -53,7 +55,7 @@ bot.on("messageCreate", msg =>  {
         
 })
 const role = [
-    ["kanal","rola","emoji"],
+    ["wiadomość","rola","emoji"],
     [950734528035581972,950454975400665138,"✅"],
     [951798445105086474,953374459572666399,"bedrock"],
     [951798445105086474,953374376697421875,"java"],
@@ -79,7 +81,7 @@ bot.on('guildMemberAdd', async member => {
 bot.on("messageReactionAdd", (react,user) => {
     
     role.forEach((info) => {
-     if(react.message.channel.id==info[0]&&react.emoji.name==info[2]) {
+     if(react.message.id==info[0]&&react.emoji.name==info[2]) {
         const guild = react.message.guild;
         console.log(react.emoji.name);
         const memberWhoReacted = guild.members.cache.find(member => member.id == user.id);
@@ -93,7 +95,7 @@ bot.on("messageReactionAdd", (react,user) => {
 bot.on("messageReactionRemove", (react,user) => {
     
     role.forEach((info) => {
-          if(react.message.channel.id==info[0]&&react.emoji.name==info[2]) {
+          if(react.message.id==info[0]&&react.emoji.name==info[2]) {
         console.log(react.emoji.name);
         const guild = react.message.guild;
         const memberWhoReacted = guild.members.cache.find(member => member.id == user.id);
@@ -110,3 +112,11 @@ Array.prototype.sample = function(){
     return this[Math.floor(Math.random()*this.length)];
 }
 bot.login(conf.dc)
+
+//baza danych
+function loaddata() {
+    return JSON.parse(fs.readFileSync("../data.json","utf-8"))
+}
+function savedata(){
+    fs.writeFileSync("../data.json",JSON.stringify(data),"utf-8")
+}
