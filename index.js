@@ -1,7 +1,8 @@
 var conf = require("../basic_luk_bot.json")
-var data = loaddata();
+//var data = loaddata();
 var fs = require("fs")
-const { Client, Intents, TextChannel, Permissions, Invite, User} = require('discord.js');
+const { Client, Intents} = require('discord.js');
+const { ok } = require("assert");
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
     intents: [
@@ -17,17 +18,34 @@ var bot = new Client({
 bot.once("ready", cos => {
     console.log("discord połączony");
     setInterval(() => {
-        const guild = bot.guilds.cache.find(g=>g.id==897523042589225011);
+        const guild = bot.guilds.cache.find(g=>g.id==962661196086009946);
         var usrc = guild.memberCount*1-2;
-        guild.channels.cache.find(c=>c.id==950882164445175848).setName("Użytkownicy : "+usrc);
+        guild.channels.cache.find(c=>c.id==962959092467531796).setName("📊użytkownicy : "+usrc);
     }, 60000);
 })
 bot.on("messageCreate", msg =>  {
     console.log(msg.content);
     var m = msg.content
     if(msg.author.id!=950849416011608124){
+        var con = msg.content
         var cmd = msg.content.split(" ");
-        switch (cmd[0])  {
+            if(msg.channel.id==964605421321064528&&con!="luk jest super")msg.delete()
+            if(msg.channel.id==962961240790020166){
+                msg.channel.messages.fetch({limit:2}).then(msgs=>{
+                    var ln = msgs.last().content
+                    if(ln*1+1!=con)msg.delete()
+                })}
+                if(msg.channel.id==962961271962091530){
+                console.log("ok")
+                msg.channel.messages.fetch({limit:2}).then(msgs=>{
+                    var ln = msgs.last().content
+                    var lc  = ln.slice(-1)
+                    console.log(lc)
+                    if(lc!=con.charAt(0))msg.delete()
+                })}
+            if(msg.channel.id==962968324923330610||admin(msg.author.id)) {
+            console.log("ok")
+            switch (cmd[0])  {
             case "?name" :
                 if(admin(msg.author.id))bot.user.setUsername(cmd[1]).catch(err => console.log(err));
                 else msg.channel.send("nie możesz tego zrobić");
@@ -48,22 +66,28 @@ bot.on("messageCreate", msg =>  {
                 msg.channel.send("obecnie dostępne komędy :")
                 msg.channel.send("?avatar")
             break
-            default :
-                
-        }
+            default :    
+            
+            
+            
+            }  
+            
+            }
+            
+            
+        
+        
+        
     }
         
 })
 const role = [
     ["wiadomość","rola","emoji"],
-    [950734528035581972,950454975400665138,"✅"],
-    [951798445105086474,953374459572666399,"bedrock"],
-    [951798445105086474,953374376697421875,"java"],
-    [951798445105086474,953374540631801946,"male"],
-    [951798445105086474,953374589231198288,"female"],
-    [951798445105086474,954883394620248104,"1️⃣"],
-    [951798445105086474,954883489260515348,"2️⃣"],
-    [951798445105086474,954883544881176576,"3️⃣"],
+    [962969964548079647,962955354264707093,"✅"],
+    [966581023884345384,962956044236124170,"bedrock"],
+    [966581023884345384,962956093355597854,"java"],
+    [966581591411404850,962956197521145876,"male"],
+    [966581591411404850,962956152545628200,"female"]
 ]
 bot.on("guildBanAdd",ban => {
     console.log(ban);
@@ -86,7 +110,7 @@ bot.on("messageReactionAdd", (react,user) => {
         console.log(react.emoji.name);
         const memberWhoReacted = guild.members.cache.find(member => member.id == user.id);
 
-        memberWhoReacted.roles.add(guild.roles.cache.find(rola => rola.id == info[1]));
+        memberWhoReacted.roles.add(guild.roles.cache.find(rola => rola.id == info[1])).catch(err=>console.log(err))
     }   
     })
     
@@ -99,7 +123,7 @@ bot.on("messageReactionRemove", (react,user) => {
         console.log(react.emoji.name);
         const guild = react.message.guild;
         const memberWhoReacted = guild.members.cache.find(member => member.id == user.id);
-        memberWhoReacted.roles.remove(guild.roles.cache.find(rola => rola.id == info[1]));
+        memberWhoReacted.roles.remove(guild.roles.cache.find(rola => rola.id == info[1])).catch(err=>console.log(err))
         }
        })
     
@@ -113,10 +137,10 @@ Array.prototype.sample = function(){
 }
 bot.login(conf.dc)
 
-//baza danych
+/*//baza danych
 function loaddata() {
     return JSON.parse(fs.readFileSync("../data.json","utf-8"))
 }
 function savedata(){
     fs.writeFileSync("../data.json",JSON.stringify(data),"utf-8")
-}
+}*/
