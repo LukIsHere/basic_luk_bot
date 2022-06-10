@@ -1,8 +1,6 @@
 var conf = require("../basic_luk_bot.json")
 //var data = loaddata();
-var fs = require("fs")
 const { Client, Intents} = require('discord.js');
-const { ok } = require("assert");
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
     intents: [
@@ -19,7 +17,7 @@ bot.once("ready", cos => {
     console.log("discord połączony");
     setInterval(() => {
         const guild = bot.guilds.cache.find(g=>g.id==962661196086009946);
-        var usrc = guild.memberCount*1-2;
+        var usrc = guild.memberCount*1-3;
         guild.channels.cache.find(c=>c.id==962959092467531796).setName("📊użytkownicy : "+usrc);
     }, 60000);
 })
@@ -29,7 +27,6 @@ bot.on("messageCreate", msg =>  {
     if(msg.author.id!=950849416011608124){
         var con = msg.content
         var cmd = msg.content.split(" ");
-            if(msg.channel.id==964605421321064528&&con!="luk jest super")msg.delete()
             if(msg.channel.id==962961240790020166){
                 msg.channel.messages.fetch({limit:2}).then(msgs=>{
                     var ln = msgs.last().content
@@ -89,19 +86,6 @@ const role = [
     [966581591411404850,962956197521145876,"male"],
     [966581591411404850,962956152545628200,"female"]
 ]
-bot.on("guildBanAdd",ban => {
-    console.log(ban);
-    var user = ban.user.username;
-    const channel = ban.guild.channels.cache.get('950874820017532931');
-    channel.send(user+" dostał bana")
-})
-bot.on('guildMemberAdd', async member => {
-    console.log("ktos")
-    const channel = member.guild.channels.cache.get('950869853995139072');
-    if (!channel) return;
-    
-    channel.send("<@"+member+">"+" właśnie wszedł mam nadzieje że zostanie naszym przyjacielem")
-});
 bot.on("messageReactionAdd", (react,user) => {
     
     role.forEach((info) => {
@@ -132,15 +116,5 @@ function admin(id){
     if(id==537649475494215690||id==537649475494215690) return true
     else return false
 }
-Array.prototype.sample = function(){
-    return this[Math.floor(Math.random()*this.length)];
-}
-bot.login(conf.dc)
 
-/*//baza danych
-function loaddata() {
-    return JSON.parse(fs.readFileSync("../data.json","utf-8"))
-}
-function savedata(){
-    fs.writeFileSync("../data.json",JSON.stringify(data),"utf-8")
-}*/
+bot.login(conf.dc)
