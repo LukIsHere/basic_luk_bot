@@ -1,7 +1,9 @@
-var conf = require("../basic_luk_bot.json")
+import fs from "fs"
+var conf = JSON.parse(fs.readFileSync("../basic_luk_bot.json","utf-8"))
 //var data = loaddata();
 var mottol = "";
-const { Client, Intents} = require('discord.js');
+import { Client, Intents} from "discord.js"
+import youtubeNotifs from "youtube-notifs";
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
     intents: [
@@ -32,6 +34,21 @@ bot.once("ready", cos => {
                     mottol = mtu[use];
                 }).catch(wtf=>console.log(wtf))).catch(wtf=>console.log(wtf))*/
     }, 60000);
+    //yt
+    
+    var ytNotifs = new youtubeNotifs.Notifier("./yt.json",30)
+     // args: new video check interval in seconds, data file path
+    ytNotifs.on("newVid", (obj) => { // obj is an object containing video info
+        bot.guilds.fetch("962661196086009946").then(g=>{
+            g.channels.cache.get("962966226164940840").send("@everyone "+obj.channel.name+" właśnie opublikował nowy film!\n"+obj.vid.url)
+        })
+        console.log(obj);
+    })
+    ytNotifs.on("error", (err) => {
+        console.error(err);
+    });
+    ytNotifs.subscribe(["UCvnYWyDpNGYS5U31J0BBakA", "UC56jZvKTddM2OJMZeAWiYBg","UCpz-9Ev8oLtrtZqWG4QaiEg","UCSmdhlfXRI4M6fvt9GVUadw"])
+    ytNotifs.start()
 })
 bot.on("messageCreate", msg =>  {
     console.log(msg.content);

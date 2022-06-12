@@ -1,0 +1,22 @@
+{
+  "name": "@james-bennett-295/writefile",
+  "version": "1.0.0",
+  "description": "Better fs.writeFile()",
+  "main": "./index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/James-Bennett-295/npm-writefile.git"
+  },
+  "keywords": [
+    "fs"
+  ],
+  "author": "James Bennett",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/James-Bennett-295/npm-writefile/issues"
+  },
+  "homepage": "https://github.com/James-Bennett-295/npm-writefile#readme"
+}

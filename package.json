@@ -1,17 +1,23 @@
 {
-  "name": "basic_luk_bot",
+  "name": "basic_luk_boy",
   "version": "1.0.0",
-  "description": "",
+  "description": "d",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "luk",
+  "repository": {
+    "type": "git",
+    "url": "d"
+  },
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^13.6.0",
-    "file-system": "^2.2.2",
+    "discord.js": "^13.8.0",
     "fs": "^0.0.1-security",
+    "youtube-notifs": "^3.0.3",
     "yt-notifs": "^1.0.0"
   }
 }
