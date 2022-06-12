@@ -17,7 +17,7 @@ bot.once("ready", cos => {
     console.log("discord połączony");
     setInterval(() => {
         const guild = bot.guilds.cache.find(g=>g.id==962661196086009946);
-        var usrc = guild.memberCount*1-3;
+        var usrc = guild.memberCount*1-4;
         guild.channels.cache.find(c=>c.id==962959092467531796).setName("📊użytkownicy : "+usrc);
     }, 60000);
 })
