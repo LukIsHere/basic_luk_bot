@@ -1,5 +1,6 @@
 var conf = require("../basic_luk_bot.json")
 //var data = loaddata();
+var mottol = "";
 const { Client, Intents} = require('discord.js');
 var bot = new Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
@@ -13,12 +14,23 @@ var bot = new Client({
     ]
     
 });
+
 bot.once("ready", cos => {
     console.log("discord połączony");
     setInterval(() => {
         const guild = bot.guilds.cache.find(g=>g.id==962661196086009946);
         var usrc = guild.memberCount*1-4;
         guild.channels.cache.find(c=>c.id==962959092467531796).setName("📊użytkownicy : "+usrc);
+        /*fetch("https://luktvpl.github.io/json/motta.json").then(r => r.json().then(m=>{
+                    var mtu = m.m;
+                    var now = new Date();
+                    var start = new Date(now.getFullYear(), 0, 0);
+                    var diff = now - start;
+                    var oneDay = 1000 * 60 * 60 * 24;
+                    var day = Math.floor(diff / oneDay);
+                    var use = day%mtu.length
+                    mottol = mtu[use];
+                }).catch(wtf=>console.log(wtf))).catch(wtf=>console.log(wtf))*/
     }, 60000);
 })
 bot.on("messageCreate", msg =>  {
@@ -59,9 +71,11 @@ bot.on("messageCreate", msg =>  {
                     .catch(err => msg.channel.send("nastąpił błąd"));
                   }
             break
+            case "?motto":
+                msg.channel.send(mottol)
+            break
             case "?help":
-                msg.channel.send("obecnie dostępne komędy :")
-                msg.channel.send("?avatar")
+                msg.channel.send("obecnie dostępne komędy : \n ?avatar - pokazuje avatar \n ?motto - motto dnia")
             break
             default :    
             
